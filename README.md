@@ -1,0 +1,99 @@
+# GenAI — College Research Assistant
+
+![College Research Assistant](https://img.shields.io/badge/GenAI-College%20Research%20Assistant-blue)
+
+GenAI is a lightweight Streamlit-based application and CLI that helps students get concise, structured reports about colleges and universities using Google’s generative AI models via the langchain_google_genai integration. It provides a simple chat-style interface and a one-shot report generator suitable for quick research, follow-up questions, and conversational exploration about institutions.
+
+Key uses:
+- Students researching college options
+- Counselors preparing overview reports
+- Developers exploring a minimal LangChain + Google GenAI Streamlit example
+
+## Stack
+- Language(s): Python (primary)
+- Framework / runtime: Streamlit (web UI), a small CLI
+- Notable libraries: langchain-core, langchain_google_genai, python-dotenv, Streamlit
+
+## What’s in this repo
+```
+app.py        # Streamlit one-shot report UI (select college -> generate report)
+chat.py       # Streamlit chat interface with history and follow-ups
+main.py       # Simple CLI chat loop using LangChain + Google GenAI
+package.json  # Minimal node manifest (contains dotenv entry but project is primarily Python)
+package-lock.json
+```
+
+How it fits together: The Streamlit pages (`app.py` and `chat.py`) are the user-facing interfaces. Both use `langchain_google_genai.ChatGoogleGenerativeAI` as the model adapter and rely on `python-dotenv` to load an `API_KEY` from a `.env` file. `main.py` demonstrates a minimal REPL/CLI usage of the same chain.
+
+## Quick start
+1. Clone the repository
+
+```bash
+git clone https://github.com/iamabirakash/GenAI.git
+cd GenAI
+```
+
+2. (Recommended) Create and activate a Python virtual environment
+
+```bash
+python -m venv .venv
+source .venv/bin/activate   # macOS / Linux
+.venv\Scripts\activate     # Windows (PowerShell)
+```
+
+3. Install required Python packages
+
+There is no requirements.txt in the repo. Install the packages used in the code:
+
+```bash
+pip install streamlit python-dotenv langchain-core langchain-google-genai
+```
+
+4. Create a `.env` file in the repo root with your Google GenAI API key
+
+```env
+API_KEY=your_google_genai_api_key_here
+```
+
+5. Run the Streamlit chat UI
+
+```bash
+streamlit run chat.py
+```
+
+Or run the one-shot report UI
+
+```bash
+streamlit run app.py
+```
+
+You can also run the CLI demo:
+
+```bash
+python main.py
+```
+
+## Usage notes
+- The Streamlit apps validate that `API_KEY` is present; if not, they will show an error and stop.
+- The prompts in `chat.py` and `app.py` are set up to avoid hallucinated placement numbers or rankings — the system prompt instructs the model to be conservative about uncertain facts.
+- The repository currently uses Google’s `gemini-2.5-flash` model in the code. Make sure your API key has access to the model you want to use and that your account is configured correctly.
+
+## Contributing
+Contributions welcome. If you want to improve the project, consider:
+- Adding a `requirements.txt` or `pyproject.toml` for reproducible installs
+- Adding tests and CI (GitHub Actions)
+- Improving prompt templates and safety checks
+- Adding caching for repeated college lookups
+
+Please open an issue or submit a PR with your changes.
+
+## Troubleshooting
+- Missing API key: ensure `.env` exists and contains `API_KEY`.
+- Missing Python packages: re-run the pip install command above.
+- Streamlit errors: try `streamlit run chat.py --logger.level=debug` to get more details.
+
+## License
+MIT — see LICENSE file if you add one.
+
+## Author
+Created by iamabirakash
