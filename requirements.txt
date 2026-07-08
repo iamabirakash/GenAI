@@ -1,0 +1,7 @@
+# Python dependencies for GenAI
+# Install with: pip install -r requirements.txt
+
+streamlit
+python-dotenv
+langchain-core
+langchain-google-genai
