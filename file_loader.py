@@ -11,7 +11,7 @@ loader = DirectoryLoader(
     show_progress=True
 )
 
-documents = loader.load()
+documents = list(loader.lazy_load())
 print(f"✅ Total documents loaded: {len(documents)}")
 
 if documents:
