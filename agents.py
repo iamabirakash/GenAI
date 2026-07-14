@@ -22,11 +22,22 @@ response = llm_with_tools.invoke(
     "Tell me the todays latest news"
 )
 
+print(response)
+print("====================")
+
 print(response.tool_calls)
+print("========= ===========")
+
 # Tool Execution
 tool_call = response.tool_calls[0]
+print(tool_call);
+print("========= ===========")
 
 # result = search_tool.invoke(tool_call["args"])
 result = search_tool.invoke(tool_call["args"]["query"])
+print("\n")
+print("========== Search_Tool_Query ==========")
+print(tool_call["args"]["query"])
+print("\n")
 
 print(result)
