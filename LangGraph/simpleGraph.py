@@ -5,23 +5,27 @@ class AgentState(TypedDict):
     name : str
     age : int
     marks : List[int]
-    msg : str
+    result : str
 
-def Processor(state: AgentState) -> AgentState:
-    print(f"Hello {state['name']}")
-    print(f"Your age is {state['age']}")
-    print(f"Your marks are {state['marks']}")
-    print(f"Your message is {state['msg']}")
-    print(f"Sum of marks is {sum(state['marks'])}")
+def sum_of_values(state: AgentState) -> AgentState:
+    state["result"] = f"Hello {state['name']}, Your age is {state['age']}, Your marks are {state['marks']}, Sum of marks is {sum(state['marks'])}"
+
+    return state
+    # print(f"Hello {state['name']}")
+    # print(f"Your age is {state['age']}")
+    # print(f"Your marks are {state['marks']}")
+    # print(f"Your message is {state['msg']}")
+    # print(f"Sum of marks is {sum(state['marks'])}")
 
 graph = StateGraph(AgentState)
-graph.add_node("Processor", Processor)  #"Processor" is the name of the node, Processor is the function that will be executed when this node is reached
-graph.set_entry_point("Processor")
-graph.set_finish_point("Processor")
+graph.add_node("sum_of_values", sum_of_values)
+graph.set_entry_point("sum_of_values")
+graph.set_finish_point("sum_of_values")
 
 app = graph.compile()
 
-app.invoke({"name": "Abir", "age": 23, "marks": [90, 80, 70], "msg": "Hello World!"})
+result = app.invoke({"name": "Abir", "age": 23, "marks": [90, 80, 70]})
+print(result["result"])
 
 '''
 # class AgentState(TypedDict):
