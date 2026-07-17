@@ -1,6 +1,7 @@
 from typing import TypedDict, List
 from langgraph.graph import StateGraph, START, END
 from random import randint
+from IPython.display import display, Image
 
 class AgentState(TypedDict):
     name: str
@@ -42,3 +43,7 @@ app = graph.compile()
 
 result = app.invoke({"name": "John", "nums": [], "counter": 0})
 print(result)
+
+display(Image(graph.get_graph().draw_ascii()))
+# This always works
+# print(app.get_graph().draw_mermaid_png())
