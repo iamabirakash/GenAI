@@ -28,6 +28,9 @@ def divide(state: AgentState) -> AgentState:
 def condition(state: AgentState) -> AgentState:
     return state;
 
+def end_node(state: AgentState) -> AgentState:
+    return state
+
 def decide_op1(state: AgentState) -> str:
     if(state["operation1"]=="+"):
         return "addition_edge"
@@ -46,6 +49,7 @@ graph.add_node("add",addition)
 graph.add_node("sub",subtraction)
 graph.add_node("mul",multiply)
 graph.add_node("div",divide)
+graph.add_node("end_node",end_node)
 graph.add_node("conditional_node",condition)
 
 graph.set_entry_point("conditional_node")
@@ -72,8 +76,11 @@ graph.add_conditional_edges(
     }
 )
 
-graph.set_finish_point("mul")
-graph.set_finish_point("div")
+# graph.set_finish_point("mul")
+# graph.set_finish_point("div")
+graph.add_edge("mul", "end_node")
+graph.add_edge("div", "end_node")
+graph.set_finish_point("end_node")
 
 app = graph.compile()
 
