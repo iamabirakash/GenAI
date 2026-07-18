@@ -19,7 +19,10 @@ class AgentState(TypedDict):
     ai: str
     topic: str
     # FIX: Add Annotated with operator.add to handle concurrent updates
-    tweets: Annotated[List[str], operator.add]
+    funny: str;
+    formal: str;
+    cringe: str;
+
 
 def greet(state: AgentState) -> AgentState:
     state['human'] = f"Hi {state['name']}, generating tweets on {state['topic']}"
@@ -29,15 +32,15 @@ def greet(state: AgentState) -> AgentState:
 def funny(state: AgentState) -> AgentState:
     tweets = model.invoke(f"Generate funny tweets on {state['topic']}").content
     # Return as a list so the reducer can append it
-    return {"tweets": [tweets]}
+    return {"funny": tweets}
 
 def formal(state: AgentState) -> AgentState:
     tweets = model.invoke(f"Generate formal tweets on {state['topic']}").content
-    return {"tweets": [tweets]}
+    return {"formal": tweets}
 
 def cringe(state: AgentState) -> AgentState:
     tweets = model.invoke(f"Generate cringe tweets on {state['topic']}").content
-    return {"tweets": [tweets]}
+    return {"cringe": tweets}
 
 # The rest of your graph definition stays the same
 graph = StateGraph(AgentState)
@@ -56,5 +59,5 @@ graph.add_edge("cringe", END)
 
 app = graph.compile()
 
-result = app.invoke({"name": "Abir", "topic": "AI", "tweets": []})
-print(result['tweets'])
+result = app.invoke({"name": "Abir", "topic": "AI", "funny": "", "formal": "", "cringe": ""})
+print(result)
