@@ -10,7 +10,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
 from langchain_core.documents import Document
 from langchain_core.documents.compressor import BaseDocumentCompressor
-from langchain.retrievers import ContextualCompressionRetriever
+from langchain_classic.retrievers import ContextualCompressionRetriever
 
 
 # --- Load PDF -----------------------------------------------------------
